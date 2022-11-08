@@ -32,7 +32,6 @@ const categoryState = {
             inventory: 5,
         },
     ],
-    activeCategories: [],
 };
 
 export const handleCategories = (payload) => {
@@ -45,6 +44,7 @@ export const handleCategories = (payload) => {
 const categoryReducer = (state=categoryState, action) => {
     switch(action.type){
         case 'CHANGE_CATEGORY':
+            console.log(state)
             return {
                 categories: state.categories.map(category => {
                     if(category.id === action.payload){
@@ -52,10 +52,11 @@ const categoryReducer = (state=categoryState, action) => {
                     }
                     return category;
                 }),
-                activeCategories: state.categories.map(category => {
-                    if(category.displayed === true){
-                        return category.id;
+                products: state.products.map(product => {
+                    if(product.category === action.payload){
+                        product.displayed = !product.displayed;
                     }
+                    return product;
                 })
             }
             default: return state;
