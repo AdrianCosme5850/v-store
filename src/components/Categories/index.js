@@ -19,7 +19,7 @@ const Categories = function(props){
         <FormGroup>
             {props.categories.map(category => {
         return(
-            <FormControlLabel control={<Checkbox onChange={() => {props.handleCategories(category.id)}}/>} label={category.category}/>
+            <FormControlLabel control={<Checkbox onChange={() => {props.handleCategories(category.id)}} defaultChecked/>} label={category.category}/>
         )
     })}
         </FormGroup>

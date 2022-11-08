@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 const Products = function(props) {
     return(<>
     {props.products.map(product => {
-        if(props.activeCategories.includes(product.category)){
+        if(product.displayed === true){
             return (
                 <Card sx={{ width: 300}}>
                 <CardContent>
@@ -23,7 +23,6 @@ const Products = function(props) {
 const mapStateToProps = (state) => ({
     products: state.products,
     categories: state.categories,
-    activeCategories: state.activeCategories,
 })
 
 export default connect(mapStateToProps)(Products);
