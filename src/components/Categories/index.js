@@ -5,20 +5,33 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
+import { connect } from 'react-redux';
+import { handleCategories } from '../store/storeInventory';
 
-const Categories = function(){
+const Categories = function(props){
     return(<>
+
     <Accordion>
         <AccordionSummary expandIcon={<ExpandMoreIcon/>}>
-            <p>categories</p>
+            <p>Categories</p>
         </AccordionSummary>
         <AccordionDetails>
         <FormGroup>
-            <FormControlLabel control={<Checkbox/>} label='category'/>
+            {props.categories.map(category => {
+        return(
+            <FormControlLabel control={<Checkbox onChange={() => {props.handleCategories(category.id)}}/>} label={category.category}/>
+        )
+    })}
         </FormGroup>
         </AccordionDetails>
     </Accordion>
     </>)
 }
 
-export default Categories;
+const mapStateToProps = (state) => ({
+    categories: state.categories
+})
+const mapDispatchToProps = {
+    handleCategories,
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Categories);
