@@ -20,6 +20,12 @@ const removeCart = (payload) => {
     }
 }
 
+const getCart = () => async(dispatch) => {
+    let response = await fetch('https://api-js401.herokuapp.com/api/v1/products');
+    let data = await response.json();
+    console.log(data)
+}
+
 const cartReducer = (state=cart, action) => {
     switch(action.type){
         case 'ADD_CART':return [...state, action.payload];
@@ -48,4 +54,5 @@ module.exports = {
     cartReducer,
     incrementCart,
     removeCart,
+    getCart,
 }
