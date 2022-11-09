@@ -1,20 +1,4 @@
-
-const categoryState = {
-    categories: [
-        {
-            id:'technology',
-            category: 'Technology',
-            description: 'High quality tech at a low price!',
-            displayed: true,
-        },
-        {
-            id:'home',
-            category: 'Home',
-            description: 'Pick up something for the home!',
-            displayed: true,
-        },
-    ],
-    products: [
+const products = [
         {
             name: 'Television',
             category: 'technology',
@@ -22,6 +6,7 @@ const categoryState = {
             description: '60" Class N10-X900M2 Great color smart TV.',
             price: 250,
             inventory: 10,
+            inCart:0,
         },
         {
             name: 'Blender',
@@ -30,38 +15,55 @@ const categoryState = {
             description: 'Perfect for healthy smoothies!',
             price: 20,
             inventory: 5,
+            inCart:0,
         },
-    ],
-};
+    ]
 
-export const handleCategories = (payload) => {
+
+const handleProducts = (payload) => {
     return {
         type: 'CHANGE_CATEGORY',
         payload: payload,
     }
 }
 
-const categoryReducer = (state=categoryState, action) => {
+const productReducer = (state=products, action) => {
     switch(action.type){
         case 'CHANGE_CATEGORY':
-            console.log(state)
-            return {
-                categories: state.categories.map(category => {
-                    if(category.id === action.payload){
-                        category.displayed = !category.displayed;
-                    }
-                    return category;
-                }),
-                products: state.products.map(product => {
+            return state.map(product => {
                     if(product.category === action.payload){
                         product.displayed = !product.displayed;
                     }
                     return product;
                 })
+        case 'ADD_CART':
+            return state.map(product => {
+                if(product.name === action.payload.name){
+                    product.inventory = product.inventory - 1;
+                }
+                return product;
+            })
+        case 'INCREMENT_CART': 
+            return state.map(product => {
+                if (product.name === action.payload.name){
+                    product.inventory = product.inventory - 1;
+                }
+                return product;
+            })
+        case 'REMOVE_CART': 
+        return state.map(product => {
+            if(product.name === action.payload.name){
+                product.inventory = product.inventory + action.payload.inCart + 1;
+                product.inCart = 0;
             }
+            return product;
+        })
             default: return state;
 
     }
 }
 
-export default categoryReducer;
+module.exports ={
+    productReducer,
+    handleProducts,
+};

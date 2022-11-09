@@ -5,10 +5,13 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import { connect } from 'react-redux';
-import { handleCategories } from '../store/storeInventory';
+import { useSelector, useDispatch} from 'react-redux';
+import { handleCategories } from '../store/categories';
 
 const Categories = function(props){
+
+    let dispatch = useDispatch();
+    let categories = useSelector(state => state.categories);
     return(<>
 
     <Accordion>
@@ -17,9 +20,9 @@ const Categories = function(props){
         </AccordionSummary>
         <AccordionDetails>
         <FormGroup>
-            {props.categories.map(category => {
+            {categories.map((category, index) => {
         return(
-            <FormControlLabel control={<Checkbox onChange={() => {props.handleCategories(category.id)}} defaultChecked/>} label={category.category}/>
+            <FormControlLabel key={index} control={<Checkbox onChange={() => {dispatch(handleCategories(category.id))}} defaultChecked/>} label={category.category}/>
         )
     })}
         </FormGroup>
@@ -28,10 +31,4 @@ const Categories = function(props){
     </>)
 }
 
-const mapStateToProps = (state) => ({
-    categories: state.categories
-})
-const mapDispatchToProps = {
-    handleCategories,
-}
-export default connect(mapStateToProps, mapDispatchToProps)(Categories);
+export default Categories;
