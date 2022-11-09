@@ -18,5 +18,15 @@ Styled the app using some material UI components. The checkboxes are generated f
 
 Added an add to cart button and a cart component to store those items. Split reducers into multiple files, and utilized the combine reducers function to bring them into react.  
 
+## Lab 38  
+
+## UML  
+
+![whiteboard](./imgs/lab38.jpg)
+
+## Approach  
+
+Webpage now fetches categories and products from the API and renders them onto the application.
+
 Live deploy: https://leafy-hotteok-c327f9.netlify.app/  
 README: https://github.com/AdrianCosme5850/v-store#readme  

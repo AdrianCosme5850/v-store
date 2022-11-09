@@ -6,12 +6,16 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import { useSelector, useDispatch} from 'react-redux';
-import { handleCategories } from '../store/categories';
+import { handleCategories, getCategories } from '../store/categories';
+import { useEffect } from 'react';
 
 const Categories = function(props){
 
     let dispatch = useDispatch();
     let categories = useSelector(state => state.categories);
+    useEffect(() => {
+        dispatch(getCategories());
+    }, [])
     return(<>
 
     <Accordion>
@@ -22,7 +26,7 @@ const Categories = function(props){
         <FormGroup>
             {categories.map((category, index) => {
         return(
-            <FormControlLabel key={index} control={<Checkbox onChange={() => {dispatch(handleCategories(category.id))}} defaultChecked/>} label={category.category}/>
+            <FormControlLabel key={index} control={<Checkbox onChange={() => {dispatch(handleCategories(category))}} defaultChecked/>} label={category.name}/>
         )
     })}
         </FormGroup>

@@ -26,12 +26,24 @@ const handleProducts = (payload) => {
         payload: payload,
     }
 }
+const getProducts = () => async(dispatch) => {
+    let response = await fetch('https://api-js401.herokuapp.com/api/v1/products');
+    let data = await response.json();
+    dispatch(setProducts(data.results))
+}
+
+const setProducts = (payload) => {
+    return {
+        type: 'SET_PRODUCTS',
+        payload: payload,
+    }
+}
 
 const productReducer = (state=products, action) => {
     switch(action.type){
         case 'CHANGE_CATEGORY':
             return state.map(product => {
-                    if(product.category === action.payload){
+                    if(product.category === action.payload.name){
                         product.displayed = !product.displayed;
                     }
                     return product;
@@ -58,6 +70,11 @@ const productReducer = (state=products, action) => {
             }
             return product;
         })
+        case 'SET_PRODUCTS': state = action.payload.map(product => {
+            product.displayed = true;
+            return product
+        }); console.log(state);
+
             default: return state;
 
     }
@@ -66,4 +83,5 @@ const productReducer = (state=products, action) => {
 module.exports ={
     productReducer,
     handleProducts,
+    getProducts,
 };

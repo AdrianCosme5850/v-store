@@ -3,11 +3,18 @@ import CardContent from '@mui/material/CardContent';
 import { useSelector, useDispatch} from 'react-redux';
 import Button from '@mui/material/Button';
 import { addToCart } from '../store/cart';
+import { useEffect } from 'react';
+import { getProducts } from '../store/storeInventory';
 
 const Products = function(props) {
 
     let products = useSelector(state => state.products)
     let dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(getProducts())
+    }, [])
+
     return(<>
     {products.map((product, index) => {
         if(product.displayed === true){
@@ -16,7 +23,7 @@ const Products = function(props) {
                 <CardContent>
                     <h2>{product.name}</h2>
                     <p> {product.description}</p>
-                    <p>{product.inventory} in stock</p>
+                    <p>{product.inStock} in stock</p>
                 </CardContent>
                 <Button onClick={() => dispatch(addToCart(product))}>Add to cart</Button>
             </Card>
